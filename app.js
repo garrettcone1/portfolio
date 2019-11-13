@@ -1,13 +1,15 @@
-const http = require("http");
-const hostname = "127.0.0.1";
-const port = 3000;
+var express = require("express"),
+    app = express(),
+    bodyParser = require("body-parser");
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/plain");
-    res.end("Hello World!!!\n");
-});
+var homePageRoute = require("./route/index");
 
-server.listen(port, hostname, () => {
-    console.log("Server running at http://${hostname}:${port}/");
+app.use(bodyParser.urlencoded({extended: true}));
+app.set("view engine", "ejs");
+
+// Use the route
+app.use(homePageRoute);
+
+app.listen(process.env.PORT || 3000, process.env.IP, () => {
+    console.log("Server started...");
 });
